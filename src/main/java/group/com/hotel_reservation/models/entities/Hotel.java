@@ -1,18 +1,20 @@
 package group.com.hotel_reservation.models.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Hotel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

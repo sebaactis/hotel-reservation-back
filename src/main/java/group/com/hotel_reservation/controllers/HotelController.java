@@ -2,6 +2,7 @@ package group.com.hotel_reservation.controllers;
 
 import group.com.hotel_reservation.models.dto.HotelDto;
 import group.com.hotel_reservation.models.entities.Hotel;
+import group.com.hotel_reservation.responses.ApiResponse;
 import group.com.hotel_reservation.services.HotelService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -22,17 +23,20 @@ public class HotelController {
     }
 
     @PostMapping()
-    public ResponseEntity<HotelDto> create(@Valid @RequestBody HotelDto hotelDto) {
+    public ResponseEntity<ApiResponse<HotelDto>>  create(@Valid @RequestBody HotelDto hotelDto) {
         try {
             Hotel hotelToCreate = hotelService.create(hotelDto);
 
             if(hotelToCreate == null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(hotelDto);
+                ApiResponse<HotelDto> response = new ApiResponse<>("No se pudo crear el hotel", HttpStatus.BAD_REQUEST.toString(), hotelDto);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(hotelDto);
+            ApiResponse<HotelDto> response = new ApiResponse<>("Hotel creado correctamente", HttpStatus.CREATED.toString(), hotelDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(hotelDto);
+            ApiResponse<HotelDto> response = new ApiResponse<>(e.getMessage(), HttpStatus.BAD_REQUEST.toString(), hotelDto);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 }

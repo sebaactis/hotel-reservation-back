@@ -1,5 +1,6 @@
 package group.com.hotel_reservation.models.dto;
 
+import group.com.hotel_reservation.models.entities.HotelImage;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -7,6 +8,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -37,4 +39,6 @@ public class HotelDto {
 
     @NotNull
     private BigDecimal discount;
+
+    private List<HotelImageDto> images;
 }

@@ -2,19 +2,20 @@ package group.com.hotel_reservation.models.dto;
 
 import group.com.hotel_reservation.models.entities.HotelImage;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class HotelDto {
+
+    private Long id;
 
     @NotNull
     @Size(min = 1, max = 25)
@@ -25,7 +26,7 @@ public class HotelDto {
     private String location;
 
     @NotNull
-    private Map<String, String> features = new HashMap<>();
+    private Set<String> features = new HashSet<>();
 
     @NotNull
     @Size(min = 1, max = 100)
@@ -38,7 +39,10 @@ public class HotelDto {
     private Float score;
 
     @NotNull
-    private BigDecimal discount;
+    private Long phone;
+
+    @NotNull
+    private String email;
 
     private List<HotelImageDto> images;
 }

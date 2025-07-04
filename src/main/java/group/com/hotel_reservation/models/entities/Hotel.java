@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 @Data
@@ -29,9 +26,8 @@ public class Hotel {
 
     @ElementCollection
     @CollectionTable(name = "hotel_features", joinColumns = @JoinColumn(name = "hotel_id"))
-    @MapKeyColumn(name = "feature_name")
-    @Column(name = "icon", nullable = false)
-    private Map<String, String> features = new HashMap<>();
+    @Column(name = "feature_name")
+    private Set<String> features = new HashSet<>();
 
     @Column(nullable = false)
     private String description;
@@ -43,7 +39,10 @@ public class Hotel {
     private Float score;
 
     @Column(nullable = false)
-    private BigDecimal discount;
+    private Long phone;
+
+    @Column(nullable = false)
+    private String email;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HotelImage> images = new ArrayList<>();

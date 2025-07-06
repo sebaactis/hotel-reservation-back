@@ -8,12 +8,13 @@ import group.com.hotel_reservation.models.entities.HotelImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class HotelMapping {
 
     public static HotelDto hotelToHotelDto(Hotel hotel) {
         HotelDto hotelDto = new HotelDto();
-        List<HotelImageDto> images = new ArrayList<>();
+
         hotelDto.setId(hotel.getId());
         hotelDto.setName(hotel.getName());
         hotelDto.setLocation(hotel.getLocation());
@@ -24,12 +25,14 @@ public class HotelMapping {
         hotelDto.setPhone(hotel.getPhone());
         hotelDto.setEmail(hotel.getEmail());
 
-        for(HotelImage hotelImage : hotel.getImages()) {
-
-            HotelImageDto hotelImageDto = new HotelImageDto();
-            hotelImageDto.setUrl(hotelImage.getUrl());
-            images.add(hotelImageDto);
-        }
+        List<HotelImageDto> images = hotel.getImages()
+                .stream()
+                .map(image -> {
+                    HotelImageDto dto = new HotelImageDto();
+                    dto.setUrl(image.getUrl());
+                    return dto;
+                })
+                .collect(Collectors.toList());
 
         hotelDto.setImages(images);
 
@@ -49,14 +52,16 @@ public class HotelMapping {
         hotel.setPhone(hotelDto.getPhone());
         hotel.setEmail(hotelDto.getEmail());
 
-        List<HotelImage> images = new ArrayList<>();
+        List<HotelImage> images = hotelDto.getImages()
+                .stream()
+                .map(image -> {
+                    HotelImage newImage = new HotelImage();
+                    newImage.setUrl(image.getUrl());
+                    newImage.setHotel(hotel);
+                    return newImage;
+                })
+                .collect(Collectors.toList());
 
-        for (HotelImageDto imageDto : hotelDto.getImages()) {
-            HotelImage image = new HotelImage();
-            image.setUrl(imageDto.getUrl());
-            image.setHotel(hotel);
-            images.add(image);
-        }
         hotel.setImages(images);
 
         return hotel;

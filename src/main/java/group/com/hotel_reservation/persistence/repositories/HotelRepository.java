@@ -3,6 +3,7 @@ package group.com.hotel_reservation.persistence.repositories;
 import group.com.hotel_reservation.models.entities.Hotel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +16,13 @@ public interface HotelRepository extends JpaRepository<Hotel, Long> {
 
     @Query(value = "SELECT * FROM hotel ORDER BY RANDOM() LIMIT 10", nativeQuery = true)
     List<Hotel> getRandomsHotels();
+
+    @Query(value = """
+    SELECT * FROM hotel
+    ORDER BY md5(CONCAT(:seed, hotel.id))
+    OFFSET :offset LIMIT :limit
+    """, nativeQuery = true)
+    List<Hotel> findAllRandom(@Param("seed") String seed, @Param("offset") int offset, @Param("limit") int limit);
+
+
 }

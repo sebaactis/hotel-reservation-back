@@ -8,6 +8,8 @@ import group.com.hotel_reservation.models.entities.HotelImage;
 import group.com.hotel_reservation.persistence.repositories.HotelRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +46,19 @@ public class HotelService {
          return true;
 
     };
+
+    public Page<HotelDto> getAllRandom(String seed, int page, int size) {
+        int offset = page * size;
+
+        List<HotelDto> hotels = hotelRepository.findAllRandom(seed, offset, size)
+                .stream()
+                .map(HotelMapping::hotelToHotelDto)
+                .collect(Collectors.toList());
+
+        long total = hotelRepository.count();
+
+        return new PageImpl<>(hotels, PageRequest.of(page, size), total);
+    }
 
     public Page<HotelDto> getAll(Pageable pageable) {
         Page<Hotel> hotels = hotelRepository.findAll(pageable);

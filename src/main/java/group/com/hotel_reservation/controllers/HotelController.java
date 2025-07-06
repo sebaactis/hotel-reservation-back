@@ -1,6 +1,7 @@
 package group.com.hotel_reservation.controllers;
 
 import group.com.hotel_reservation.models.dto.HotelDto;
+import group.com.hotel_reservation.models.dto.HotelWithSeedDto;
 import group.com.hotel_reservation.models.entities.Hotel;
 import group.com.hotel_reservation.responses.ApiResponse;
 import group.com.hotel_reservation.services.HotelService;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/hotel")
@@ -26,28 +28,37 @@ public class HotelController {
     }
 
     @GetMapping()
-    public ResponseEntity<ApiResponse<Page<HotelDto>>> getAll(
+    public ResponseEntity<ApiResponse<HotelWithSeedDto<HotelDto>>> getAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "false") boolean random,
+            @RequestParam(required = false) String seed,
             @RequestParam(defaultValue = "name") String sortBy,
-            @RequestParam(defaultValue = "asc") String direction) {
-                try {
-                    Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
-                    Pageable pageable = PageRequest.of(page, size, sort);
-                    Page<HotelDto> hotels = hotelService.getAll(pageable);
+            @RequestParam(defaultValue = "asc") String direction
+    ) {
+        try {
+            Page<HotelDto> hotels;
 
-                    if(hotels.isEmpty()) {
-                        ApiResponse<Page<HotelDto>> response = new ApiResponse<>("No hay hoteles cargados", HttpStatus.BAD_REQUEST.toString(), hotels);
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-                    }
-
-                    ApiResponse<Page<HotelDto>> response = new ApiResponse<>("Hoteles recuperados correctamente", HttpStatus.OK.toString(), hotels);
-                    return ResponseEntity.status(HttpStatus.OK).body(response);
-                } catch (Exception e) {
-                    ApiResponse<Page<HotelDto>> response = new ApiResponse<>("Error al intentar recuperar los hoteles", HttpStatus.BAD_REQUEST.toString(), null);
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            if (random) {
+                if (seed == null || seed.isBlank()) {
+                    seed = UUID.randomUUID().toString();
                 }
-    };
+                hotels = hotelService.getAllRandom(seed, page, size);
+            } else {
+                Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+                Pageable pageable = PageRequest.of(page, size, sort);
+                hotels = hotelService.getAll(pageable);
+            }
+
+            HotelWithSeedDto<HotelDto> responseObject = new HotelWithSeedDto<>(seed, hotels);
+            ApiResponse<HotelWithSeedDto<HotelDto>> response = new ApiResponse<>("Hoteles recuperados correctamente", HttpStatus.OK.toString(), responseObject);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+
+        } catch (Exception e) {
+            ApiResponse<HotelWithSeedDto<HotelDto>> response = new ApiResponse<>("Error al intentar recuperar los hoteles", HttpStatus.BAD_REQUEST.toString(), null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<HotelDto>> getById(@PathVariable Long id) {

@@ -1,49 +1,34 @@
-package group.com.hotel_reservation.models.dto;
+package group.com.hotel_reservation.models.dto.hotel;
 
-import group.com.hotel_reservation.models.entities.HotelImage;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class HotelDto {
+public class HotelUpdateDto {
 
-    private Long id;
-
-    @NotNull
     @Size(min = 1, max = 25)
     private String name;
 
-    @NotNull
     @Size(min = 1, max = 25)
     private String location;
-
-    @NotNull
     private Set<String> features = new HashSet<>();
 
-    @NotNull
     @Size(min = 1, max = 100)
     private String description;
 
-    @NotNull
     private BigDecimal price;
-
-    @NotNull
     private Float score;
-
-    @NotNull
     private Long phone;
-
-    @NotNull
     private String email;
-
+    private String category;
     private List<HotelImageDto> images;
 }

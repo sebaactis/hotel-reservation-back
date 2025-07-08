@@ -1,7 +1,8 @@
 package group.com.hotel_reservation.controllers;
 
-import group.com.hotel_reservation.models.dto.HotelDto;
-import group.com.hotel_reservation.models.dto.HotelWithSeedDto;
+import group.com.hotel_reservation.models.dto.hotel.HotelDto;
+import group.com.hotel_reservation.models.dto.hotel.HotelUpdateDto;
+import group.com.hotel_reservation.models.dto.hotel.HotelWithSeedDto;
 import group.com.hotel_reservation.models.entities.Hotel;
 import group.com.hotel_reservation.responses.ApiResponse;
 import group.com.hotel_reservation.services.HotelService;
@@ -109,6 +110,25 @@ public class HotelController {
 
             ApiResponse<HotelDto> response = new ApiResponse<>("Hotel creado correctamente", HttpStatus.CREATED.toString(), hotelDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (Exception e) {
+            ApiResponse<HotelDto> response = new ApiResponse<>(e.getMessage(), HttpStatus.BAD_REQUEST.toString(), null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<ApiResponse<HotelDto>> update(@PathVariable Long id, @RequestBody HotelUpdateDto hotelUpdateDto) {
+        try {
+            HotelDto hotelToUpdate = hotelService.update(id, hotelUpdateDto);
+
+            if(hotelToUpdate == null) {
+                ApiResponse<HotelDto> response = new ApiResponse<>("No se pudo actualizar el hotel", HttpStatus.BAD_REQUEST.toString(), null);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+
+            ApiResponse<HotelDto> response = new ApiResponse<>("Hotel actualizado correctamente", HttpStatus.OK.toString(), hotelToUpdate);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+
         } catch (Exception e) {
             ApiResponse<HotelDto> response = new ApiResponse<>(e.getMessage(), HttpStatus.BAD_REQUEST.toString(), null);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);

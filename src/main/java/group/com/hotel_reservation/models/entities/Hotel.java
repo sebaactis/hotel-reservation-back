@@ -46,4 +46,8 @@ public class Hotel {
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HotelImage> images = new ArrayList<>();
+
+    @ManyToOne()
+    @JoinColumn(name = "category_id")
+    private Category category;
 }

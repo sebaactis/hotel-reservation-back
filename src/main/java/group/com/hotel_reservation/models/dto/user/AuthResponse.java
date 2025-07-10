@@ -1,0 +1,15 @@
+package group.com.hotel_reservation.models.dto.user;
+
+import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+import lombok.Data;
+
+@Builder
+@Data
+public class AuthResponse {
+    @NotNull
+    private String email;
+
+    @NotNull
+    private String token;
+}

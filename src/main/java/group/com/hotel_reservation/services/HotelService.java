@@ -35,6 +35,7 @@ public class HotelService {
         }
 
         Hotel hotel = HotelMapping.hotelDtoToHotel(hotelDto);
+        hotel.setCategory(categoryRepository.findByDescription(hotelDto.getCategory()));
         return hotelRepository.save(hotel);
     };
 

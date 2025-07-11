@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -98,6 +99,7 @@ public class HotelController {
         }
     };
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping()
     public ResponseEntity<ApiResponse<HotelDto>>  create(@Valid @RequestBody HotelDto hotelDto) {
         try {
@@ -116,6 +118,7 @@ public class HotelController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("{id}")
     public ResponseEntity<ApiResponse<HotelDto>> update(@PathVariable Long id, @RequestBody HotelUpdateDto hotelUpdateDto) {
         try {
@@ -135,7 +138,9 @@ public class HotelController {
         }
     }
 
+
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<String>> deleteById(@PathVariable Long id) {
         try {
             Boolean delete = hotelService.delete(id);

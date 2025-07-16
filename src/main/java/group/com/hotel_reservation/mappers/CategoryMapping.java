@@ -5,7 +5,6 @@ import group.com.hotel_reservation.models.dto.hotel.HotelDto;
 import group.com.hotel_reservation.models.entities.Category;
 
 import java.util.List;
-import java.util.Optional;
 
 public class CategoryMapping {
 

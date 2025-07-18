@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -88,10 +89,14 @@ public class HotelService {
         return new PageImpl<>(hotels, PageRequest.of(page, size), total);
     }
 
-    public Page<HotelDto> getAll(Pageable pageable) {
+    public Page<HotelDto> getAll( Pageable pageable) {
         Page<Hotel> hotels = hotelRepository.findAll(pageable);
-
         return hotels.map(HotelMapping::hotelToHotelDto);
+    }
+
+    public Page<HotelDto> search(String location, LocalDate from, LocalDate to, Pageable pageable) {
+        return hotelRepository.search(location, from, to, pageable)
+                .map(HotelMapping::hotelToHotelDto);
     }
 
     public HotelDto getOne(Long hotelId) {

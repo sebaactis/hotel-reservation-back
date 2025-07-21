@@ -11,5 +11,8 @@ public class AuthResponse {
     private String email;
 
     @NotNull
+    private Long userId;
+
+    @NotNull
     private String token;
 }

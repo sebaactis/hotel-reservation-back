@@ -73,6 +73,7 @@ public class AuthService {
         saveToken(token);
 
         return AuthResponse.builder()
+                .userId(user.get().getId())
                 .email(user.get().getEmail())
                 .token(token)
                 .build();

@@ -7,6 +7,7 @@ import group.com.hotel_reservation.models.entities.Role;
 import group.com.hotel_reservation.models.entities.User;
 import group.com.hotel_reservation.persistence.repositories.RoleRepository;
 import group.com.hotel_reservation.persistence.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +27,11 @@ public class UserService {
         List<User> users = userRepository.findAll();
 
         return users.stream().map(UserMapping::userToUserDto).toList();
+    }
+
+    public User getUser(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User no encontrado"));
     }
 
     public UserDto changeRole(UpdateRolDto updateRolDto) {

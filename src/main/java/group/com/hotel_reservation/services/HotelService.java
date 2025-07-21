@@ -106,6 +106,12 @@ public class HotelService {
         return HotelMapping.hotelToHotelDto(hotel);
     }
 
+    public Hotel getFullHotel(Long hotelId) {
+        return hotelRepository.findById(hotelId)
+                .orElseThrow(() -> new EntityNotFoundException("Hotel no encontrado con ID"));
+
+    }
+
     public List<HotelDto> getRandomHotels() {
         return hotelRepository.getRandomsHotels().stream()
                 .map(HotelMapping::hotelToHotelDto)

@@ -9,7 +9,7 @@ public class FavoriteMapping {
 
         favoriteDto.setId(favorite.getId());
         favoriteDto.setUserId(favorite.getUser().getId());
-        favoriteDto.setHotelId(favorite.getHotel().getId());
+        favoriteDto.setHotelDto(HotelMapping.hotelToHotelDto(favorite.getHotel()));
         favoriteDto.setCreatedAt(favorite.getCreatedAt());
 
         return favoriteDto;

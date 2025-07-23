@@ -34,6 +34,13 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User no encontrado"));
     }
 
+    public UserDto getUserDto(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User no encontrado"));
+
+        return UserMapping.userToUserDto(user);
+    }
+
     public UserDto changeRole(UpdateRolDto updateRolDto) {
         User user = userRepository.findByEmail(updateRolDto.getEmail())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));

@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/hotel/**").permitAll()
                         .requestMatchers("/api/v1/category/**").permitAll()
                         .requestMatchers("/api/v1/hotelBooking/**").permitAll()
+                        .requestMatchers("/api/v1/rating/**").permitAll()
 
                         .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

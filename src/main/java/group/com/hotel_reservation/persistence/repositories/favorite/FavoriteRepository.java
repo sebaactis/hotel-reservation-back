@@ -1,4 +1,4 @@
-package group.com.hotel_reservation.persistence.repositories;
+package group.com.hotel_reservation.persistence.repositories.favorite;
 
 import group.com.hotel_reservation.models.entities.Favorite;
 import group.com.hotel_reservation.models.entities.Hotel;

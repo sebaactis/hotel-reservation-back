@@ -2,6 +2,7 @@ package group.com.hotel_reservation.mappers;
 
 import group.com.hotel_reservation.models.dto.hotel.HotelDto;
 import group.com.hotel_reservation.models.dto.hotel.HotelImageDto;
+import group.com.hotel_reservation.models.dto.hotelPolicies.HotelPolicyDto;
 import group.com.hotel_reservation.models.entities.Hotel;
 import group.com.hotel_reservation.models.entities.HotelImage;
 
@@ -23,6 +24,13 @@ public class HotelMapping {
         hotelDto.setPhone(hotel.getPhone());
         hotelDto.setEmail(hotel.getEmail());
         hotelDto.setCategory(hotel.getCategory().getDescription());
+
+        List<HotelPolicyDto> policies = hotel.getPolicies()
+                .stream()
+                .map(HotelPolicyMapping::hotelPolicyToDto)
+                .toList();
+
+        hotelDto.setPolicies(policies);
 
         List<HotelImageDto> images = hotel.getImages()
                 .stream()

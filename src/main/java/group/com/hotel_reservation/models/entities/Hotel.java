@@ -53,6 +53,9 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Favorite> favorites = new ArrayList<>();
 
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HotelPolicy> policies = new ArrayList<>();
+
     @ManyToOne()
     @JoinColumn(name = "category_id")
     private Category category;

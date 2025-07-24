@@ -1,16 +1,14 @@
-package group.com.hotel_reservation.services;
+package group.com.hotel_reservation.services.category;
 
 import group.com.hotel_reservation.mappers.CategoryMapping;
 import group.com.hotel_reservation.models.dto.category.CategoryDto;
 import group.com.hotel_reservation.models.dto.category.SaveCategoryDto;
 import group.com.hotel_reservation.models.entities.Category;
-import group.com.hotel_reservation.models.entities.Hotel;
-import group.com.hotel_reservation.persistence.repositories.CategoryRepository;
+import group.com.hotel_reservation.persistence.repositories.category.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryService {

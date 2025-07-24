@@ -1,9 +1,8 @@
-package group.com.hotel_reservation.services;
+package group.com.hotel_reservation.services.hotel;
 
 import group.com.hotel_reservation.mappers.HotelBookingMapping;
 import group.com.hotel_reservation.models.dto.hotelBooking.HotelBookingDto;
-import group.com.hotel_reservation.models.entities.HotelBooking;
-import group.com.hotel_reservation.persistence.repositories.HotelBookingRepository;
+import group.com.hotel_reservation.persistence.repositories.hotel.HotelBookingRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

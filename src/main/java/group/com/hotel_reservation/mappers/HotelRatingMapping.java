@@ -5,7 +5,7 @@ import group.com.hotel_reservation.models.dto.hotelRating.HotelRatingDetailsDto;
 import group.com.hotel_reservation.models.dto.hotelRating.HotelRatingDto;
 import group.com.hotel_reservation.models.dto.user.UserDto;
 import group.com.hotel_reservation.models.entities.HotelRating;
-import group.com.hotel_reservation.services.UserService;
+import group.com.hotel_reservation.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

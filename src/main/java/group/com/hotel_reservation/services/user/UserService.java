@@ -1,12 +1,12 @@
-package group.com.hotel_reservation.services;
+package group.com.hotel_reservation.services.user;
 
 import group.com.hotel_reservation.mappers.UserMapping;
 import group.com.hotel_reservation.models.dto.user.UpdateRolDto;
 import group.com.hotel_reservation.models.dto.user.UserDto;
 import group.com.hotel_reservation.models.entities.Role;
 import group.com.hotel_reservation.models.entities.User;
-import group.com.hotel_reservation.persistence.repositories.RoleRepository;
-import group.com.hotel_reservation.persistence.repositories.UserRepository;
+import group.com.hotel_reservation.persistence.repositories.role.RoleRepository;
+import group.com.hotel_reservation.persistence.repositories.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 

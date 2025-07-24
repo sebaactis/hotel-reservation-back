@@ -1,11 +1,11 @@
-package group.com.hotel_reservation.services;
+package group.com.hotel_reservation.services.favorite;
 
 import group.com.hotel_reservation.mappers.FavoriteMapping;
 import group.com.hotel_reservation.models.dto.favorite.FavoriteDto;
 import group.com.hotel_reservation.models.entities.Favorite;
 import group.com.hotel_reservation.models.entities.Hotel;
 import group.com.hotel_reservation.models.entities.User;
-import group.com.hotel_reservation.persistence.repositories.FavoriteRepository;
+import group.com.hotel_reservation.persistence.repositories.favorite.FavoriteRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;

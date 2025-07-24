@@ -2,10 +2,8 @@ package group.com.hotel_reservation.controllers;
 
 import group.com.hotel_reservation.models.dto.user.UpdateRolDto;
 import group.com.hotel_reservation.models.dto.user.UserDto;
-import group.com.hotel_reservation.models.entities.User;
 import group.com.hotel_reservation.responses.ApiResponse;
-import group.com.hotel_reservation.services.UserService;
-import org.hibernate.sql.Update;
+import group.com.hotel_reservation.services.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

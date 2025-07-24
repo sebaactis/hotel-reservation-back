@@ -3,7 +3,7 @@ package group.com.hotel_reservation.controllers;
 import group.com.hotel_reservation.models.dto.category.CategoryDto;
 import group.com.hotel_reservation.models.dto.category.SaveCategoryDto;
 import group.com.hotel_reservation.responses.ApiResponse;
-import group.com.hotel_reservation.services.CategoryService;
+import group.com.hotel_reservation.services.category.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

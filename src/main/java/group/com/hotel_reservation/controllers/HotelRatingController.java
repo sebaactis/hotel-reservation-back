@@ -4,7 +4,7 @@ import group.com.hotel_reservation.models.dto.hotelRating.HotelRatingDetailsDto;
 import group.com.hotel_reservation.models.dto.hotelRating.HotelRatingDto;
 import group.com.hotel_reservation.models.dto.hotelRating.RateHotelDto;
 import group.com.hotel_reservation.responses.ApiResponse;
-import group.com.hotel_reservation.services.HotelRatingService;
+import group.com.hotel_reservation.services.hotel.HotelRatingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

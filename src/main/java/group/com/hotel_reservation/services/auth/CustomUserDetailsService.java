@@ -1,7 +1,7 @@
-package group.com.hotel_reservation.services;
+package group.com.hotel_reservation.services.auth;
 
 import group.com.hotel_reservation.models.entities.User;
-import group.com.hotel_reservation.persistence.repositories.UserRepository;
+import group.com.hotel_reservation.persistence.repositories.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {

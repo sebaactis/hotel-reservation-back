@@ -1,12 +1,12 @@
-package group.com.hotel_reservation.services;
+package group.com.hotel_reservation.services.hotel;
 
 import group.com.hotel_reservation.mappers.HotelMapping;
 import group.com.hotel_reservation.models.dto.hotel.HotelDto;
 import group.com.hotel_reservation.models.dto.hotel.HotelUpdateDto;
 import group.com.hotel_reservation.models.entities.Category;
 import group.com.hotel_reservation.models.entities.Hotel;
-import group.com.hotel_reservation.persistence.repositories.CategoryRepository;
-import group.com.hotel_reservation.persistence.repositories.HotelRepository;
+import group.com.hotel_reservation.persistence.repositories.category.CategoryRepository;
+import group.com.hotel_reservation.persistence.repositories.hotel.HotelRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

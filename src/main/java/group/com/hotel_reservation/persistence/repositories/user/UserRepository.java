@@ -1,4 +1,4 @@
-package group.com.hotel_reservation.persistence.repositories;
+package group.com.hotel_reservation.persistence.repositories.user;
 
 import group.com.hotel_reservation.models.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;

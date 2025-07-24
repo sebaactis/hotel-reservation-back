@@ -1,9 +1,8 @@
 package group.com.hotel_reservation.controllers;
 
 import group.com.hotel_reservation.models.dto.hotelBooking.HotelBookingDto;
-import group.com.hotel_reservation.models.entities.HotelBooking;
 import group.com.hotel_reservation.responses.ApiResponse;
-import group.com.hotel_reservation.services.HotelBookingService;
+import group.com.hotel_reservation.services.hotel.HotelBookingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

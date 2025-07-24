@@ -1,5 +1,6 @@
 package group.com.hotel_reservation.models.dto.hotel;
 
+import group.com.hotel_reservation.models.dto.hotelPolicies.HotelPolicyDto;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -37,6 +38,9 @@ public class HotelDto {
 
     @NotNull
     private Long phone;
+
+    @NotNull
+    private List<HotelPolicyDto> policies;
 
     @NotNull
     private String email;

@@ -5,7 +5,7 @@ import group.com.hotel_reservation.models.dto.hotel.HotelUpdateDto;
 import group.com.hotel_reservation.models.dto.hotel.HotelWithSeedDto;
 import group.com.hotel_reservation.models.entities.Hotel;
 import group.com.hotel_reservation.responses.ApiResponse;
-import group.com.hotel_reservation.services.HotelService;
+import group.com.hotel_reservation.services.hotel.HotelService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

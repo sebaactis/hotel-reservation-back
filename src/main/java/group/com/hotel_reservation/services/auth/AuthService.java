@@ -1,4 +1,4 @@
-package group.com.hotel_reservation.services;
+package group.com.hotel_reservation.services.auth;
 
 import group.com.hotel_reservation.models.dto.user.AuthResponse;
 import group.com.hotel_reservation.models.dto.user.LoginDto;
@@ -7,9 +7,9 @@ import group.com.hotel_reservation.models.dto.user.RegisterResponse;
 import group.com.hotel_reservation.models.entities.Role;
 import group.com.hotel_reservation.models.entities.Token;
 import group.com.hotel_reservation.models.entities.User;
-import group.com.hotel_reservation.persistence.repositories.RoleRepository;
-import group.com.hotel_reservation.persistence.repositories.TokenRepository;
-import group.com.hotel_reservation.persistence.repositories.UserRepository;
+import group.com.hotel_reservation.persistence.repositories.role.RoleRepository;
+import group.com.hotel_reservation.persistence.repositories.auth.TokenRepository;
+import group.com.hotel_reservation.persistence.repositories.user.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

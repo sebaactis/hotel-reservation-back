@@ -1,4 +1,4 @@
-package group.com.hotel_reservation.services;
+package group.com.hotel_reservation.services.hotel;
 
 import group.com.hotel_reservation.mappers.HotelRatingMapping;
 import group.com.hotel_reservation.models.dto.hotelRating.HotelRatingDetailsDto;
@@ -6,9 +6,9 @@ import group.com.hotel_reservation.models.dto.hotelRating.HotelRatingDto;
 import group.com.hotel_reservation.models.entities.Hotel;
 import group.com.hotel_reservation.models.entities.HotelRating;
 import group.com.hotel_reservation.models.entities.User;
-import group.com.hotel_reservation.persistence.repositories.HotelRatingRepository;
-import group.com.hotel_reservation.persistence.repositories.HotelRepository;
-import group.com.hotel_reservation.persistence.repositories.UserRepository;
+import group.com.hotel_reservation.persistence.repositories.hotel.HotelRatingRepository;
+import group.com.hotel_reservation.persistence.repositories.hotel.HotelRepository;
+import group.com.hotel_reservation.persistence.repositories.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package group.com.hotel_reservation.persistence.repositories;
+package group.com.hotel_reservation.persistence.repositories.hotel;
 
 import group.com.hotel_reservation.models.entities.Hotel;
 import org.springframework.data.domain.Page;

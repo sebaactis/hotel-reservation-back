@@ -69,12 +69,14 @@ public class AuthService {
             throw new IllegalArgumentException("Los datos son incorrectos");
         }
 
-        String token = jwtService.generateToken(user.get().getEmail(), user.get().getRole());
+        String token = jwtService.generateToken(user.get().getEmail(), user.get().getRole(), user.get().getName(), user.get().getLastName());
         saveToken(token);
 
         return AuthResponse.builder()
                 .userId(user.get().getId())
                 .email(user.get().getEmail())
+                .name(user.get().getName())
+                .lastName(user.get().getLastName())
                 .token(token)
                 .build();
     }

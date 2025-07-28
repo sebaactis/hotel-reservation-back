@@ -18,6 +18,10 @@ public class HotelBooking {
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     private LocalDate bookedFrom;
     private LocalDate bookedTo;
 }

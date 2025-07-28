@@ -1,5 +1,7 @@
 package group.com.hotel_reservation.models.dto.hotelBooking;
 
+import group.com.hotel_reservation.models.dto.hotel.HotelDto;
+import group.com.hotel_reservation.models.dto.user.UserDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +16,10 @@ public class HotelBookingDto {
     private Long id;
 
     @NotNull
-    private Long hotel_id;
+    private HotelDto hotel;
+
+    @NotNull
+    private UserDto user;
 
     @NotNull
     private LocalDate bookedFrom;

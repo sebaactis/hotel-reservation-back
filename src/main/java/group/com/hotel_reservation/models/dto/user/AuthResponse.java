@@ -14,5 +14,11 @@ public class AuthResponse {
     private Long userId;
 
     @NotNull
+    private String name;
+
+    @NotNull
+    private String lastName;
+
+    @NotNull
     private String token;
 }

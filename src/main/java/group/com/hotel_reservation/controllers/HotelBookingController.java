@@ -4,6 +4,7 @@ import group.com.hotel_reservation.models.dto.hotelBooking.HotelBookingDto;
 import group.com.hotel_reservation.models.dto.hotelBooking.HotelBookingRequest;
 import group.com.hotel_reservation.responses.ApiResponse;
 import group.com.hotel_reservation.services.hotel.HotelBookingService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -62,7 +63,7 @@ public class HotelBookingController {
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @PostMapping
-    public ResponseEntity<ApiResponse<HotelBookingDto>> create(@RequestBody HotelBookingRequest request) {
+    public ResponseEntity<ApiResponse<HotelBookingDto>> create(@RequestBody @Valid HotelBookingRequest request) {
         try {
             HotelBookingDto hotelBooking = hotelBookingService.createBooking(request);
 

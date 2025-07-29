@@ -16,6 +16,10 @@ public class HotelBookingMapping {
         dto.setUser(UserMapping.userToUserDto(hotelBooking.getUser()));
         dto.setBookedFrom(hotelBooking.getBookedFrom());
         dto.setBookedTo(hotelBooking.getBookedTo());
+        dto.setGuests(hotelBooking.getGuests());
+        dto.setNights(hotelBooking.getNights());
+        dto.setCreatedAt(hotelBooking.getCreatedAt());
+        dto.setTotalPrice(hotelBooking.getTotalPrice());
 
         return dto;
     }

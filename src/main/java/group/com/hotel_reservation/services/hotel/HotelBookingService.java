@@ -11,6 +11,7 @@ import group.com.hotel_reservation.persistence.repositories.hotel.HotelRepositor
 import group.com.hotel_reservation.persistence.repositories.user.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +48,10 @@ public class HotelBookingService {
         booking.setUser(user.get());
         booking.setBookedFrom(request.getBookedFrom());
         booking.setBookedTo(request.getBookedTo());
+        booking.setGuests(request.getGuests());
+        booking.setNights(request.getNights());
+        booking.setTotalPrice(request.getTotalPrice());
+        booking.setCreatedAt(LocalDate.now());
 
         return HotelBookingMapping.hotelBookingToDto(hotelBookingRepository.save(booking));
     }

@@ -26,4 +26,16 @@ public class HotelBookingDto {
 
     @NotNull
     private LocalDate bookedTo;
+
+    @NotNull
+    private LocalDate createdAt;
+
+    @NotNull
+    private Integer guests;
+
+    @NotNull
+    private Integer nights;
+
+    @NotNull
+    private Double totalPrice;
 }

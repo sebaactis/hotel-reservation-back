@@ -1,18 +1,12 @@
 package group.com.hotel_reservation.controllers;
 
-import group.com.hotel_reservation.models.dto.user.AuthResponse;
-import group.com.hotel_reservation.models.dto.user.LoginDto;
-import group.com.hotel_reservation.models.dto.user.RegisterDto;
-import group.com.hotel_reservation.models.dto.user.RegisterResponse;
+import group.com.hotel_reservation.models.dto.user.*;
 import group.com.hotel_reservation.responses.ApiResponse;
 import group.com.hotel_reservation.services.auth.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/auth")
@@ -57,6 +51,25 @@ public class AuthController {
 
         } catch (Exception e) {
             ApiResponse<AuthResponse> response = new ApiResponse<>(e.getMessage(), HttpStatus.BAD_REQUEST.toString(), null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @PostMapping("me")
+    public ResponseEntity<ApiResponse<MeResponse>> getMeInfo(@RequestBody MeDto dto) {
+        try {
+            MeResponse claims = authService.getMe(dto.getToken());
+
+            if(claims.getEmail() == null) {
+                ApiResponse<MeResponse> response = new ApiResponse<>("Error al intentar traer la informacion", HttpStatus.BAD_REQUEST.toString(), null);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
+
+            ApiResponse<MeResponse> response = new ApiResponse<>("Informacion recuperada", HttpStatus.OK.toString(), claims);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+
+        } catch (Exception e) {
+            ApiResponse<MeResponse> response = new ApiResponse<>(e.getMessage(), HttpStatus.BAD_REQUEST.toString(), null);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }

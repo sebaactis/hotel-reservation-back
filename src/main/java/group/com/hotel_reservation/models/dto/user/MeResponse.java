@@ -1,17 +1,17 @@
 package group.com.hotel_reservation.models.dto.user;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Builder
 @Data
-public class AuthResponse {
+@Builder
+public class MeResponse {
+
     @NotNull
     private String email;
-
-    @NotNull
-    private Long userId;
 
     @NotNull
     private String name;
@@ -20,8 +20,8 @@ public class AuthResponse {
     private String lastName;
 
     @NotNull
-    private String token;
+    private String role;
 
     @NotNull
-    private String role;
+    private String userId;
 }

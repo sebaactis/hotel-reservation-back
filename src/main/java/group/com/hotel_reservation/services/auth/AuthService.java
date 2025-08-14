@@ -1,15 +1,13 @@
 package group.com.hotel_reservation.services.auth;
 
-import group.com.hotel_reservation.models.dto.user.AuthResponse;
-import group.com.hotel_reservation.models.dto.user.LoginDto;
-import group.com.hotel_reservation.models.dto.user.RegisterDto;
-import group.com.hotel_reservation.models.dto.user.RegisterResponse;
+import group.com.hotel_reservation.models.dto.user.*;
 import group.com.hotel_reservation.models.entities.Role;
 import group.com.hotel_reservation.models.entities.Token;
 import group.com.hotel_reservation.models.entities.User;
 import group.com.hotel_reservation.persistence.repositories.role.RoleRepository;
 import group.com.hotel_reservation.persistence.repositories.auth.TokenRepository;
 import group.com.hotel_reservation.persistence.repositories.user.UserRepository;
+import io.jsonwebtoken.Claims;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -69,7 +67,7 @@ public class AuthService {
             throw new IllegalArgumentException("Los datos son incorrectos");
         }
 
-        String token = jwtService.generateToken(user.get().getEmail(), user.get().getRole(), user.get().getName(), user.get().getLastName());
+        String token = jwtService.generateToken(user.get().getId(), user.get().getEmail(), user.get().getRole(), user.get().getName(), user.get().getLastName());
         saveToken(token);
 
         return AuthResponse.builder()
@@ -78,6 +76,20 @@ public class AuthService {
                 .name(user.get().getName())
                 .lastName(user.get().getLastName())
                 .token(token)
+                .role(user.get().getRole().getName())
+                .build();
+    }
+
+    public MeResponse getMe(String token) {
+        Claims userClaims = jwtService.extractClaims(token);
+
+        return MeResponse
+                .builder()
+                .email(userClaims.getSubject())
+                .name(userClaims.get("name").toString())
+                .lastName(userClaims.get("lastName").toString())
+                .role(userClaims.get("role").toString())
+                .userId(userClaims.get("userId").toString())
                 .build();
     }
 

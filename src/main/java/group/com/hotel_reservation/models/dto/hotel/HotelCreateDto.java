@@ -1,35 +1,30 @@
 package group.com.hotel_reservation.models.dto.hotel;
 
-import group.com.hotel_reservation.models.dto.hotelPolicies.HotelPolicyDto;
-import group.com.hotel_reservation.models.entities.Feature;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.List;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class HotelDto {
-
-    private Long id;
+public class HotelCreateDto {
 
     @NotNull
-    @Size(min = 1, max = 25)
+    @Size(min=1, max=25)
     private String name;
 
-    @NotNull
-    @Size(min = 1, max = 25)
+    @NotNull @Size(min=1, max=25)
     private String location;
 
-    @NotNull
-    private Set<Feature> features = new HashSet<>();
-
-    @NotNull
-    @Size(min = 1, max = 100)
+    @NotNull @Size(min=1, max=100)
     private String description;
+
+    private List<HotelImageDto> images;
 
     @NotNull
     private BigDecimal price;
@@ -40,12 +35,11 @@ public class HotelDto {
     @NotNull
     private Long phone;
 
-    private List<HotelPolicyDto> policies;
-
     @NotNull
     private String email;
 
+    @NotNull
     private String category;
 
-    private List<HotelImageDto> images;
+    private List<Long> featureIds;
 }

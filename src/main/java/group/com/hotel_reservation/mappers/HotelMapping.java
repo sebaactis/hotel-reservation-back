@@ -1,5 +1,6 @@
 package group.com.hotel_reservation.mappers;
 
+import group.com.hotel_reservation.models.dto.hotel.HotelCreateDto;
 import group.com.hotel_reservation.models.dto.hotel.HotelDto;
 import group.com.hotel_reservation.models.dto.hotel.HotelImageDto;
 import group.com.hotel_reservation.models.dto.hotelPolicies.HotelPolicyDto;
@@ -70,6 +71,34 @@ public class HotelMapping {
                 .collect(Collectors.toList());
 
         hotel.setImages(images);
+
+        return hotel;
+    }
+
+    public static Hotel hotelCreateDtoToHotel(HotelCreateDto hotelDto) {
+        Hotel hotel = new Hotel();
+
+        hotel.setName(hotelDto.getName());
+        hotel.setLocation(hotelDto.getLocation());
+        hotel.setPrice(hotelDto.getPrice());
+        hotel.setDescription(hotelDto.getDescription());
+        hotel.setScore(hotelDto.getScore());
+        hotel.setPhone(hotelDto.getPhone());
+        hotel.setEmail(hotelDto.getEmail());
+
+        List<HotelImage> images = hotelDto.getImages()
+                .stream()
+                .map(image -> {
+                    HotelImage newImage = new HotelImage();
+                    newImage.setUrl(image.getUrl());
+                    newImage.setHotel(hotel);
+                    return newImage;
+                })
+                .collect(Collectors.toList());
+
+        hotel.setImages(images);
+
+        // ----> TO DO: resolver FEATURES
 
         return hotel;
     }

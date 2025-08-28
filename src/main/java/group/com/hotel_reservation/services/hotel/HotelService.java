@@ -1,6 +1,7 @@
 package group.com.hotel_reservation.services.hotel;
 
 import group.com.hotel_reservation.mappers.HotelMapping;
+import group.com.hotel_reservation.models.dto.hotel.HotelCreateDto;
 import group.com.hotel_reservation.models.dto.hotel.HotelDto;
 import group.com.hotel_reservation.models.dto.hotel.HotelUpdateDto;
 import group.com.hotel_reservation.models.entities.Category;
@@ -30,10 +31,12 @@ public class HotelService {
         this.categoryRepository = categoryRepository;
     }
 
-    public Hotel create(HotelDto hotelDto) {
+    public Hotel create(HotelCreateDto hotelDto) {
         if (hotelRepository.existsByName(hotelDto.getName())) {
             throw new IllegalArgumentException("Ya existe un hotel con el nombre informado");
         }
+
+        // ----> TO DO: resolver FEATURES
 
         Hotel hotel = HotelMapping.hotelDtoToHotel(hotelDto);
         hotel.setCategory(categoryRepository.findByDescription(hotelDto.getCategory()));
@@ -46,9 +49,9 @@ public class HotelService {
 
         Optional.ofNullable(hotelUpdateDto.getName()).ifPresent(hotel::setName);
         Optional.ofNullable(hotelUpdateDto.getLocation()).ifPresent(hotel::setLocation);
-        Optional.ofNullable(hotelUpdateDto.getFeatures())
-                .filter(features -> !features.isEmpty())
-                .ifPresent(hotel::setFeatures);
+
+        // ----> TO DO: resolver FEATURES
+
         Optional.ofNullable(hotelUpdateDto.getDescription()).ifPresent(hotel::setDescription);
         Optional.ofNullable(hotelUpdateDto.getPrice()).ifPresent(hotel::setPrice);
         Optional.ofNullable(hotelUpdateDto.getScore()).ifPresent(hotel::setScore);
@@ -73,7 +76,6 @@ public class HotelService {
          hotelRepository.delete(hotel);
 
          return true;
-
     };
 
     public Page<HotelDto> getAllRandom(String seed, int page, int size) {

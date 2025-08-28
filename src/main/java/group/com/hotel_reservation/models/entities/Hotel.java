@@ -24,10 +24,13 @@ public class Hotel {
     @Column(nullable = false)
     private String location;
 
-    @ElementCollection
-    @CollectionTable(name = "hotel_features", joinColumns = @JoinColumn(name = "hotel_id"))
-    @Column(name = "feature_name")
-    private Set<String> features = new HashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "hotel_feature",
+            joinColumns = @JoinColumn(name ="hotel_id"),
+            inverseJoinColumns = @JoinColumn(name = "feature_id")
+    )
+    private Set<Feature> features = new HashSet<>();
 
     @Column(nullable = false)
     private String description;

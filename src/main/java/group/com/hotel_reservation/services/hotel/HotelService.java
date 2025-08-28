@@ -5,8 +5,10 @@ import group.com.hotel_reservation.models.dto.hotel.HotelCreateDto;
 import group.com.hotel_reservation.models.dto.hotel.HotelDto;
 import group.com.hotel_reservation.models.dto.hotel.HotelUpdateDto;
 import group.com.hotel_reservation.models.entities.Category;
+import group.com.hotel_reservation.models.entities.Feature;
 import group.com.hotel_reservation.models.entities.Hotel;
 import group.com.hotel_reservation.persistence.repositories.category.CategoryRepository;
+import group.com.hotel_reservation.persistence.repositories.feature.FeatureRepository;
 import group.com.hotel_reservation.persistence.repositories.hotel.HotelRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
@@ -16,8 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,22 +26,30 @@ public class HotelService {
 
     private final HotelRepository hotelRepository;
     private final CategoryRepository categoryRepository;
+    private final FeatureRepository featureRepository;
 
-    public HotelService(HotelRepository hotelRepository, CategoryRepository categoryRepository) {
+    public HotelService(HotelRepository hotelRepository, CategoryRepository categoryRepository, FeatureRepository featureRepository) {
         this.hotelRepository = hotelRepository;
         this.categoryRepository = categoryRepository;
+        this.featureRepository = featureRepository;
     }
 
-    public Hotel create(HotelCreateDto hotelDto) {
+    public HotelDto create(HotelCreateDto hotelDto) {
         if (hotelRepository.existsByName(hotelDto.getName())) {
             throw new IllegalArgumentException("Ya existe un hotel con el nombre informado");
         }
 
-        // ----> TO DO: resolver FEATURES
-
-        Hotel hotel = HotelMapping.hotelDtoToHotel(hotelDto);
+        Hotel hotel = HotelMapping.hotelCreateDtoToHotel(hotelDto);
         hotel.setCategory(categoryRepository.findByDescription(hotelDto.getCategory()));
-        return hotelRepository.save(hotel);
+
+        if(hotelDto.getFeatureIds() != null) {
+            Set<Feature> features = resolveFeaturesByIds(hotelDto.getFeatureIds());
+            hotel.setFeatures(features);
+        }
+
+        Hotel saved = hotelRepository.save(hotel);
+        return HotelMapping.hotelToHotelDto(saved);
+
     };
 
     public HotelDto update(Long id, HotelUpdateDto hotelUpdateDto) {
@@ -57,7 +66,6 @@ public class HotelService {
         Optional.ofNullable(hotelUpdateDto.getScore()).ifPresent(hotel::setScore);
         Optional.ofNullable(hotelUpdateDto.getPhone()).ifPresent(hotel::setPhone);
         Optional.ofNullable(hotelUpdateDto.getEmail()).ifPresent(hotel::setEmail);
-
         Optional.ofNullable(hotelUpdateDto.getCategory()).ifPresent(description -> {
             Category category = categoryRepository.findByDescription(description);
             if(category != null) {
@@ -65,8 +73,17 @@ public class HotelService {
             }
         });
 
-        return HotelMapping.hotelToHotelDto(hotelRepository.save(hotel));
+        Set<String> incomingNames = hotelUpdateDto.getFeatures();
 
+        if(incomingNames != null) {
+            Set<Feature> resolved = resolveFeaturesByNames(incomingNames);
+
+            hotel.getFeatures().clear();
+            hotel.getFeatures().addAll(resolved);
+        }
+
+        Hotel saved = hotelRepository.save(hotel);
+        return HotelMapping.hotelToHotelDto(saved);
     }
 
     public Boolean delete(Long id) {
@@ -118,5 +135,52 @@ public class HotelService {
         return hotelRepository.getRandomsHotels().stream()
                 .map(HotelMapping::hotelToHotelDto)
                 .collect(Collectors.toList());
+    }
+
+
+    private Set<Feature> resolveFeaturesByIds(List<Long> featureIds) {
+        if (featureIds == null) return Collections.emptySet();
+
+        List<Feature> found = featureRepository.findAllById(featureIds);
+
+        if (found.size() != featureIds.size()) {
+
+            Set<Long> foundIds = found.stream().map(Feature::getId).collect(Collectors.toSet());
+
+            List<Long> missing = featureIds.stream().filter(id -> !foundIds.contains(id)).toList();
+
+            throw new IllegalArgumentException("Features no encontradas para IDs: " + missing);
+        }
+
+        return new HashSet<>(found);
+    }
+
+    private Set<Feature> resolveFeaturesByNames(Set<String> names) {
+        if (names == null) return null;
+        if (names.isEmpty()) return Collections.emptySet();
+
+        Set<String> normalized = names.stream()
+                .filter(Objects::nonNull)
+                .map(s -> s.trim().toLowerCase())
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toSet());
+
+        if (normalized.isEmpty()) return Collections.emptySet();
+
+        Set<Feature> found = featureRepository.findByNameInIgnoreCase(normalized);
+
+        Set<String> foundNames = found.stream()
+                .map(f -> f.getName().toLowerCase())
+                .collect(Collectors.toSet());
+
+        Set<String> missing = new HashSet<>(normalized);
+
+        missing.removeAll(foundNames);
+
+        if (!missing.isEmpty()) {
+            throw new IllegalArgumentException("Features no encontradas para nombres: " + missing);
+        }
+
+        return found;
     }
 }

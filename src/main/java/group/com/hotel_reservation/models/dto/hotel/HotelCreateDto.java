@@ -41,5 +41,6 @@ public class HotelCreateDto {
     @NotNull
     private String category;
 
+    @NotNull
     private List<Long> featureIds;
 }

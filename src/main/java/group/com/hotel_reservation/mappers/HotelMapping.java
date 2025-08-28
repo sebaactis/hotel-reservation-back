@@ -98,8 +98,6 @@ public class HotelMapping {
 
         hotel.setImages(images);
 
-        // ----> TO DO: resolver FEATURES
-
         return hotel;
     }
 }

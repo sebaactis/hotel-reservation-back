@@ -1,5 +1,6 @@
 package group.com.hotel_reservation.controllers;
 
+import group.com.hotel_reservation.models.dto.hotel.HotelCreateDto;
 import group.com.hotel_reservation.models.dto.hotel.HotelDto;
 import group.com.hotel_reservation.models.dto.hotel.HotelUpdateDto;
 import group.com.hotel_reservation.models.dto.hotel.HotelWithSeedDto;
@@ -111,16 +112,16 @@ public class HotelController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping()
-    public ResponseEntity<ApiResponse<HotelDto>>  create(@Valid @RequestBody HotelDto hotelDto) {
+    public ResponseEntity<ApiResponse<HotelDto>>  create(@Valid @RequestBody HotelCreateDto hotelDto) {
         try {
-            Hotel hotelToCreate = hotelService.create(hotelDto);
+            HotelDto hotelToCreate = hotelService.create(hotelDto);
 
             if(hotelToCreate == null) {
-                ApiResponse<HotelDto> response = new ApiResponse<>("No se pudo crear el hotel", HttpStatus.BAD_REQUEST.toString(), hotelDto);
+                ApiResponse<HotelDto> response = new ApiResponse<>("No se pudo crear el hotel", HttpStatus.BAD_REQUEST.toString(), hotelToCreate);
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
 
-            ApiResponse<HotelDto> response = new ApiResponse<>("Hotel creado correctamente", HttpStatus.CREATED.toString(), hotelDto);
+            ApiResponse<HotelDto> response = new ApiResponse<>("Hotel creado correctamente", HttpStatus.CREATED.toString(), hotelToCreate);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             ApiResponse<HotelDto> response = new ApiResponse<>(e.getMessage(), HttpStatus.BAD_REQUEST.toString(), null);

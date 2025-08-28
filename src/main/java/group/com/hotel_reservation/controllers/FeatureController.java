@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -72,7 +73,8 @@ public class FeatureController {
         }
     }
 
-    @PostMapping("{id}")
+    @PostMapping()
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Feature>> create(@RequestBody FeatureCreateDto featureCreateDto) {
 
         try {
@@ -94,6 +96,7 @@ public class FeatureController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Feature>> update(@RequestParam Long id, @RequestBody FeatureUpdateDto featureUpdateDto) {
 
         try {
@@ -115,6 +118,7 @@ public class FeatureController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Feature>> delete(@RequestParam Long id) {
 
         try {

@@ -97,7 +97,7 @@ public class FeatureController {
 
     @PutMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Feature>> update(@RequestParam Long id, @RequestBody FeatureUpdateDto featureUpdateDto) {
+    public ResponseEntity<ApiResponse<Feature>> update(@PathVariable Long id, @RequestBody FeatureUpdateDto featureUpdateDto) {
 
         try {
             Feature feature = service.update(id, featureUpdateDto);
@@ -119,7 +119,7 @@ public class FeatureController {
 
     @DeleteMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Feature>> delete(@RequestParam Long id) {
+    public ResponseEntity<ApiResponse<Feature>> delete(@PathVariable Long id) {
 
         try {
             Boolean deleted = service.delete(id);

@@ -7,6 +7,7 @@ import group.com.hotel_reservation.services.hotel.HotelPolicyService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class HotelPolicyController {
     }
 
     @PostMapping("{hotelId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<HotelPolicyDto>> createPolicy(@PathVariable Long hotelId, @Valid @RequestBody SaveHotelPolicyDto dto) {
         try {
             HotelPolicyDto creation = hotelPolicyService.createPolicy(hotelId, dto);
@@ -60,6 +62,7 @@ public class HotelPolicyController {
     }
 
     @PutMapping("/{policyId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<HotelPolicyDto>> updatePolicy(@PathVariable Long policyId, @RequestBody SaveHotelPolicyDto dto) {
         try {
             HotelPolicyDto update = hotelPolicyService.updatePolicy(policyId, dto);
@@ -79,6 +82,7 @@ public class HotelPolicyController {
     }
 
     @DeleteMapping("/{policyId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse<Boolean>> deletePolicy(@PathVariable Long policyId) {
         try {
             Boolean delete = hotelPolicyService.deletePolicy(policyId);

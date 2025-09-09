@@ -5,6 +5,7 @@ import group.com.hotel_reservation.models.dto.hotelRating.HotelRatingDto;
 import group.com.hotel_reservation.models.dto.hotelRating.RateHotelDto;
 import group.com.hotel_reservation.responses.ApiResponse;
 import group.com.hotel_reservation.services.hotel.HotelRatingService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,7 +25,7 @@ public class HotelRatingController {
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @PostMapping("/{userId}/{hotelId}")
-    public ResponseEntity<ApiResponse<HotelRatingDto>> rateHotel(@PathVariable Long userId, @PathVariable Long hotelId, @RequestBody RateHotelDto dto) {
+    public ResponseEntity<ApiResponse<HotelRatingDto>> rateHotel(@PathVariable Long userId, @PathVariable Long hotelId, @Valid @RequestBody RateHotelDto dto) {
 
         try {
             HotelRatingDto rating = hotelRatingService.rateHotel(userId, hotelId, dto.getScore(), dto.getComment());

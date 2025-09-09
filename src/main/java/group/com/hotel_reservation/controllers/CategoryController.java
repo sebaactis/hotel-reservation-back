@@ -4,6 +4,7 @@ import group.com.hotel_reservation.models.dto.category.CategoryDto;
 import group.com.hotel_reservation.models.dto.category.SaveCategoryDto;
 import group.com.hotel_reservation.responses.ApiResponse;
 import group.com.hotel_reservation.services.category.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -63,7 +64,7 @@ public class CategoryController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<ApiResponse<CategoryDto>> create(@RequestBody SaveCategoryDto saveCategoryDto) {
+    public ResponseEntity<ApiResponse<CategoryDto>> create(@Valid @RequestBody SaveCategoryDto saveCategoryDto) {
         try {
             CategoryDto category = service.createCategory(saveCategoryDto);
 
@@ -83,7 +84,7 @@ public class CategoryController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("{id}")
-    public ResponseEntity<ApiResponse<CategoryDto>> edit(@PathVariable Long id, @RequestBody SaveCategoryDto saveCategoryDto) {
+    public ResponseEntity<ApiResponse<CategoryDto>> edit(@PathVariable Long id, @Valid @RequestBody SaveCategoryDto saveCategoryDto) {
         try {
             CategoryDto category = service.editCategory(id, saveCategoryDto);
 

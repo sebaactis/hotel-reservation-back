@@ -4,6 +4,7 @@ import group.com.hotel_reservation.models.dto.user.UpdateRolDto;
 import group.com.hotel_reservation.models.dto.user.UserDto;
 import group.com.hotel_reservation.responses.ApiResponse;
 import group.com.hotel_reservation.services.user.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,7 +43,7 @@ public class UserController {
     }
 
     @PostMapping("updateRole")
-    public ResponseEntity<ApiResponse<UserDto>> updateRole(@RequestBody UpdateRolDto updateRolDto) {
+    public ResponseEntity<ApiResponse<UserDto>> updateRole(@Valid @RequestBody UpdateRolDto updateRolDto) {
         try {
             UserDto userDto = userService.changeRole(updateRolDto);
 

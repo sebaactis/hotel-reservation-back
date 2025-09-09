@@ -131,7 +131,7 @@ public class HotelController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("{id}")
-    public ResponseEntity<ApiResponse<HotelDto>> update(@PathVariable Long id, @RequestBody HotelUpdateDto hotelUpdateDto) {
+    public ResponseEntity<ApiResponse<HotelDto>> update(@PathVariable Long id, @Valid @RequestBody HotelUpdateDto hotelUpdateDto) {
         try {
             HotelDto hotelToUpdate = hotelService.update(id, hotelUpdateDto);
 

@@ -5,6 +5,7 @@ import group.com.hotel_reservation.models.dto.feature.FeatureUpdateDto;
 import group.com.hotel_reservation.models.entities.Feature;
 import group.com.hotel_reservation.responses.ApiResponse;
 import group.com.hotel_reservation.services.feature.FeatureService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -75,7 +76,7 @@ public class FeatureController {
 
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Feature>> create(@RequestBody FeatureCreateDto featureCreateDto) {
+    public ResponseEntity<ApiResponse<Feature>> create(@Valid @RequestBody FeatureCreateDto featureCreateDto) {
 
         try {
             Feature feature = service.create(featureCreateDto);
@@ -97,7 +98,7 @@ public class FeatureController {
 
     @PutMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ApiResponse<Feature>> update(@PathVariable Long id, @RequestBody FeatureUpdateDto featureUpdateDto) {
+    public ResponseEntity<ApiResponse<Feature>> update(@PathVariable Long id, @Valid @RequestBody FeatureUpdateDto featureUpdateDto) {
 
         try {
             Feature feature = service.update(id, featureUpdateDto);

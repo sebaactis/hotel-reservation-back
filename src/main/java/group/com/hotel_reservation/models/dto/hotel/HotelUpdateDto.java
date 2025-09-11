@@ -1,7 +1,6 @@
 package group.com.hotel_reservation.models.dto.hotel;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,8 +30,14 @@ public class HotelUpdateDto {
     @Min(1)
     private BigDecimal price;
     private Float score;
+
+    @Digits(integer = 15, fraction = 0)
     private Long phone;
+
+    @Email
     private String email;
+
     private String category;
+
     private List<HotelImageDto> images;
 }

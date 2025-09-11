@@ -40,9 +40,6 @@ public class FeatureService {
     public Feature update(Long id, FeatureUpdateDto featureUpdateDto) {
         Feature feature = getOne(id);
 
-        if(feature.getName().equalsIgnoreCase(featureUpdateDto.getName()) && repository.existsByNameIgnoreCase(featureUpdateDto.getName())) {
-            throw new IllegalArgumentException("Ya existe una feature con ese nombre");
-        }
 
         Optional.ofNullable(featureUpdateDto.getName()).ifPresent(feature::setName);
         Optional.ofNullable(featureUpdateDto.getIcon()).ifPresent(feature::setIcon);
